@@ -46,7 +46,7 @@ export default function RootLayout({
             <body style={{ backgroundColor: ThreadTheme.surface }}>
                 <Providers>
                     <div className="flex flex-col min-h-screen">
-                        <NavMenu logo={{ href: '/', logo: <AFLogo /> }} items={[]} />
+                        {/* <NavMenu logo={{ href: '/', logo: <AFLogo /> }} items={[]} /> */}
                         <main className="flex-grow pt-10">{children}</main>
                         <Footer
                             bg="surface"
