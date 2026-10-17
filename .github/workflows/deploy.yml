@@ -1,0 +1,35 @@
+name: Deploy
+
+on:
+    # Manual runs from the Actions tab, e.g. to rebuild without a new commit
+    workflow_dispatch:
+    push:
+        branches: [main]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            packages: write
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Log in to GHCR
+              uses: docker/login-action@v3
+              with:
+                  registry: ghcr.io
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }} # built-in, no setup needed
+
+            - name: Build and push image
+              uses: docker/build-push-action@v5
+              with:
+                  context: .
+                  push: true
+                  tags: ghcr.io/${{ github.repository }}:latest
+
+    # deploy job (SSH through the tunnel to run apps/home/deploy.sh on the server) comes once that
+    # script exists in a-fisher-data-center; same as the website's
