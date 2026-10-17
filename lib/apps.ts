@@ -18,6 +18,8 @@ export type App = {
     /** Phosphor icon name, as thread-ui takes it */
     icon: ComponentProps<typeof InfoCard>['icon'];
     cover: { src: StaticImageData; alt: string };
+    /** Optional how-to page, linked under the app's card (so only people who have the app see it) */
+    guide?: { title: string; href: string };
 };
 
 /** Every app, in display order. Adding an app: one entry here + its Authelia rule + its perm_* group. */
@@ -30,8 +32,17 @@ export const APPS: App[] = [
         permission: 'perm_books',
         icon: 'BooksIcon',
         cover: { src: booksCover, alt: 'A row of books on a shelf' },
+        guide: { title: 'Set up an e-reader (KOReader)', href: '/guides/books' },
     },
 ];
+
+/**
+ * Looks up an app by id, e.g. for a guide page to check the viewer may see it.
+ *
+ * @example
+ * const books = getApp('books');
+ */
+export const getApp = (id: string) => APPS.find((app) => app.id === id);
 
 /**
  * The apps this viewer is allowed into.

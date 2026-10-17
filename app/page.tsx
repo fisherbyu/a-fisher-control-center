@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { Card, ColumnLayout, Container, InfoCard, PageHeader, Text } from 'thread-ui';
 import { appsFor } from '@/lib/apps';
 import { getViewer } from '@/lib/viewer';
@@ -45,14 +46,22 @@ export default async function Home() {
                     lgcol={3}
                     items={apps.map((app) => ({
                         key: app.id,
-                        description: app.description,
                         content: (
-                            <InfoCard
-                                title={app.name}
-                                url={app.url}
-                                icon={app.icon}
-                                image={<Image src={app.cover.src} alt={app.cover.alt} />}
-                            />
+                            <div className="flex flex-col gap-2">
+                                <InfoCard
+                                    title={app.name}
+                                    url={app.url}
+                                    icon={app.icon}
+                                    image={<Image src={app.cover.src} alt={app.cover.alt} />}
+                                />
+                                <Text size="sm">{app.description}</Text>
+                                {/* Only on apps this viewer has, so it never hints at others */}
+                                {app.guide && (
+                                    <Text size="sm">
+                                        <Link href={app.guide.href}>{app.guide.title}</Link>
+                                    </Text>
+                                )}
+                            </div>
                         ),
                     }))}
                 />
