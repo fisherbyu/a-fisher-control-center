@@ -1,3 +1,9 @@
+import { Container, Title } from 'thread-ui';
+
 export default function Home() {
-    return <div>Stuff</div>;
+    return (
+        <Container>
+            <Title>Applications</Title>
+        </Container>
+    );
 }
