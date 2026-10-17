@@ -1,7 +1,10 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
+    // Bundles only what the server needs, for a small Docker image
+    output: 'standalone',
+    // Don't generate AGENTS.md / CLAUDE.md on next dev
+    agentRules: false,
 };
 
 export default nextConfig;
