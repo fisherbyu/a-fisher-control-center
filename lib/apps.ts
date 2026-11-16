@@ -4,6 +4,7 @@ import type { InfoCard } from 'thread-ui';
 import { hasPermission, type Viewer } from './viewer';
 // Unsplash License: "Row of books on a shelf" by MIROV (unsplash.com/photos/tpVB6MhG4os)
 import booksCover from '@/public/apps/books.jpg';
+import audiobooksCover from '@/public/apps/audiobooks.jpg';
 
 /** One app on the server that home links to, shown as an InfoCard. */
 export type App = {
@@ -22,7 +23,10 @@ export type App = {
     guide?: { title: string; href: string };
 };
 
-/** Every app, in display order. Adding an app: one entry here + its Authelia rule + its perm_* group. */
+/**
+ * Every app, in display order. Adding an app: one entry here + its perm_* group + its Authelia rule
+ * (access_control for apps behind nginx's check, or an OIDC client's authorization_policy).
+ */
 export const APPS: App[] = [
     {
         id: 'books',
@@ -33,6 +37,16 @@ export const APPS: App[] = [
         icon: 'BooksIcon',
         cover: { src: booksCover, alt: 'A row of books on a shelf' },
         guide: { title: 'Set up an e-reader (KOReader)', href: '/guides/books' },
+    },
+    {
+        id: 'audiobooks',
+        name: 'Audiobooks',
+        url: 'https://audiobooks.fisherandrew.org',
+        description: 'Listen in the browser or on your phone',
+        permission: 'perm_audiobooks',
+        icon: 'HeadphonesIcon',
+        cover: { src: audiobooksCover, alt: 'Headphones' },
+        guide: { title: 'Set up your phone', href: '/guides/audiobooks' },
     },
 ];
 
